@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PinjamService } from './pinjam.service';
 import { CreatePinjamDto } from './dto/create-pinjam.dto';
 import { UpdatePinjamDto } from './dto/update-pinjam.dto';
@@ -8,27 +16,50 @@ export class PinjamController {
   constructor(private readonly pinjamService: PinjamService) {}
 
   @Post()
-  create(@Body() createPinjamDto: CreatePinjamDto) {
-    return this.pinjamService.create(createPinjamDto);
+  async create(@Body() createPinjamDto: CreatePinjamDto) {
+    const data = await this.pinjamService.create(createPinjamDto);
+    return {
+      statusCode: 201,
+      data,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.pinjamService.findAll();
+  async findAll() {
+    const data = await this.pinjamService.findAll();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.pinjamService.findOne(+id);
+  @Get(':no_pinjam')
+  async findOne(@Param('no_pinjam') no_pinjam: string) {
+    const data = await this.pinjamService.findOne(+no_pinjam);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePinjamDto: UpdatePinjamDto) {
-    return this.pinjamService.update(+id, updatePinjamDto);
+  @Patch(':no_pinjam')
+  async update(
+    @Param('no_pinjam') no_pinjam: string,
+    @Body() updatePinjamDto: UpdatePinjamDto,
+  ) {
+    const data = await this.pinjamService.update(+no_pinjam, updatePinjamDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.pinjamService.remove(+id);
+  @Delete(':no_pinjam')
+  async remove(@Param('no_pinjam') no_pinjam: string) {
+    const data = await this.pinjamService.remove(+no_pinjam);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

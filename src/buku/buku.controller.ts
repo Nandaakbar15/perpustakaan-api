@@ -19,34 +19,58 @@ export class BukuController {
 
   @Post()
   create(@Body() createBukuDto: CreateBukuDto) {
-    return this.bukuService.create(createBukuDto);
+    const data = this.bukuService.create(createBukuDto);
+    return {
+      statusCode: 201,
+      data,
+    };
   }
 
   @Get()
-  findAll() {
-    return this.bukuService.findAll();
+  async findAll() {
+    const data = await this.bukuService.findAll();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get(':no_buku')
-  findOne(@Param('no_buku') no_buku: string) {
-    return this.bukuService.findOne(+no_buku);
+  async findOne(@Param('no_buku') no_buku: string) {
+    const data = await this.bukuService.findOne(+no_buku);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('carijudul')
-  findJudul(@Param('judul') judul: string) {
-    return this.bukuService.findJudul(judul);
+  async findJudul(@Param('judul') judul: string) {
+    const data = await this.bukuService.findJudul(judul);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Patch(':no_buku')
-  update(
+  async update(
     @Param('no_buku') no_buku: string,
     @Body() updateBukuDto: UpdateBukuDto,
   ) {
-    return this.bukuService.update(+no_buku, updateBukuDto);
+    const data = await this.bukuService.update(+no_buku, updateBukuDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Delete(':no_buku')
-  remove(@Param('no_buku') no_buku: string) {
-    return this.bukuService.remove(+no_buku);
+  async remove(@Param('no_buku') no_buku: string) {
+    const data = await this.bukuService.remove(+no_buku);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }
